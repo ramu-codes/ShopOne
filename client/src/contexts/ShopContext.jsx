@@ -95,9 +95,10 @@ export const ShopProvider = ({ children }) => {
       setShopName(data.shopName);
       setUser(data);
       await fetchAllData();
-      return true;
-    } catch {
-      return false;
+      return { success: true, message: '' };
+    } catch (err) {
+      const message = err.response?.data?.message || err.message || 'Unable to sign in.';
+      return { success: false, message };
     }
   }, [fetchAllData]);
 
@@ -110,9 +111,13 @@ export const ShopProvider = ({ children }) => {
       setShopName(data.shopName);
       setUser(data);
       await fetchAllData();
-      return true;
-    } catch {
-      return false;
+      return { success: true, message: '' };
+    } catch (err) {
+      const message = err.response?.data?.errors?.[0]?.msg
+        || err.response?.data?.message
+        || err.message
+        || 'Unable to create the account.';
+      return { success: false, message };
     }
   }, [fetchAllData]);
 

@@ -26,9 +26,9 @@ export default function Login() {
     }
     setSubmitting(true);
     try {
-      const ok = await login(email.trim(), password);
-      if (ok) toast.success('Welcome back!');
-      else toast.error('Invalid email or password.');
+      const result = await login(email.trim(), password);
+      if (result.success) toast.success('Welcome back!');
+      else toast.error(result.message);
     } finally {
       setSubmitting(false);
     }
